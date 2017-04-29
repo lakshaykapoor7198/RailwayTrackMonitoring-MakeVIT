@@ -16,6 +16,9 @@ var crack  = mongoose.Schema({
     flag:{
         type:Number
     },
+    status:{
+        type:Number
+    }
 });
 
 

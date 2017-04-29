@@ -53,6 +53,25 @@
 </head>
 <body>
 
+	<nav class='navbar navbar-default' style='margin-bottom: 0px;border-radius: 0;;'>
+		<div class="container-fluid">
+			<div class='navbar-header'>
+				<a href='#' class='navbar-brand active' style='font-size:32px'>CracksOnTracks</a>
+				<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#navbar'>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+				</button>
+			</div>
+			<div class='collapse navbar-collapse' id='navbar'>
+				<ul class='nav navbar-nav navbar-right'>
+					<li style='font-size:32px' class='wow jello'><a href="/cracks">CRACKS</a></li>
+					<li style='font-size:32px' class='wow jello'><a href="/">MONITOR</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
 	<center>
 	<div id="placeholder" style="width:1700px;height:980px"></div>
 	</center>
@@ -74,7 +93,8 @@ new WOW().init();
 				  { label: "Crack",color:'red', data:  [[response.clat,response.clong] ],points:{radius:15,show: true }, showLabels: true, labels: ["Crack"], labelPlacement: "below", canvasRender: true, cColor: "red",cFont: "15px, san-serif"}
 	  				]
 
-				response.junctions.forEach(function(junc){
+				if(response.status == 0){
+					response.junctions.forEach(function(junc){
 					var obj = new Object;
 					obj['label']="Junction";
 					obj['color']="blue",
@@ -102,6 +122,9 @@ new WOW().init();
 					];
 					data.push(obj);
 				});
+				}
+
+				
 				  
 
 
