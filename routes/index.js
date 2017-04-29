@@ -3,20 +3,23 @@ var router = express.Router();
 var c = require('../models/rail');
 var l = require('../models/latest');
 var j = require('../models/junction');
+var multer  = require('multer')
+var upload = multer({ dest: './public/images' })
 /* GET home page. */
 router.get('/', function (req, res) {
   res.render('home');
 });
 
-router.post('/post', function (req, res) {
+router.post('/post',upload.single('file') , function (req, res) {
   var d = req.body;
-  var tlat = d.tlat;
-  var tlong = d.tlong;
-  var clat = d.clat;
-  var clong = d.clong;
+  var tlat = parseInt(d.tlat);
+  var tlong = parseInt(d.tlong);
+  var clat = parseInt(d.clat);
+  var clong = parseInt(d.clong);
+  var filename  = req.file.filename;
   var flag = 0;
   var status = 0;
-  var item = { tlat: tlat, tlong: tlong, clat: clat, clong: clong, flag: flag ,status:status};
+  var item = { tlat: tlat, tlong: tlong, clat: clat, clong: clong, flag: flag ,status:status,filename:filename};
   l.Latest.remove({}, function (e, d) {
     if (!e) {
       console.log("All latest removed");
@@ -130,6 +133,14 @@ router.get('/check',(req,res)=>{
   console.log(clat,clong);
   c.Crack.findOneAndUpdate({clat:clat,clong:clong},{$set:{"status":1}},(e,d)=>{
     console.log("One crack maintained");
+  });
+});
+
+
+
+router.get('/photos',function(req,res){
+  c.Crack.find({},(e,d)=>{
+    res.render('photos',{"cracks":d});
   });
 });
 

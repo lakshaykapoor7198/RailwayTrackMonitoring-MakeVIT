@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<title></title>
+ 	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/javascripts/bootstrap.min.css">
+	<link rel="stylesheet" href="/javascripts/animate.css">
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/javascripts/flot/jquery.flot.js"></script>
+	<script src="/javascripts/flot/jquery.flot.labels.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<nav class='navbar navbar-default wow zoomInLeft' style='margin-bottom: 0px;border-radius: 0;;'>
+		<div class="container-fluid">
+			<div class='navbar-header'>
+				<a href='#' class='navbar-brand active' style='font-size:32px'>CracksOnTracks</a>
+				<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#navbar'>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+				</button>
+			</div>
+			<div class='collapse navbar-collapse' id='navbar'>
+				<ul class='nav navbar-nav navbar-right'>
+					<li style='font-size:32px' class='wow jello'><a href="/cracks">Go Back</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <div class='jumbotron' style='background-color:#dc143c;color:white;font-size:36px;'>
+        <center>
+            Cracks that require maintainance...
+        </center>
+    </div>
+
+
+    <%if (cracks!=undefined){%>
+		<%cracks.forEach(function(crack){%>
+			<div class="container-fluid" >
+				<div class='col-sm-3'></div>
+				<div class='col-sm-6' style="color:white;background-color: #616161;margin:20px 0px 0px 0px;box-shadow: '3px 3px 3px 3px black'">
+						<center><h1 style='font-size:70px'><b>At <%=crack.clat%> , <%=crack.clong%></b></h1></center><br>
+						<center><img src='images/<%=crack.filename%>' style='width:80%;height:300px;'></center><br>
+				</div>
+					
+				<div class='col-sm-3'></div>
+			</div>
+		<%});%>
+	<%}%>
+
+
+
+
+
+    
+
+<script src='/javascripts/wow.js'></script>
+<script type='text/javascript'>
+new WOW().init();
+</script>
+</body>
+</html>
+
+
+
+
+    

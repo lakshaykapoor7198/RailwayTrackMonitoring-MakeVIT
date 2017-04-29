@@ -16,6 +16,9 @@ var latest  = mongoose.Schema({
     flag:{
         type:Number
     },
+    filename:{
+        type:String 
+    }
 });
 
 

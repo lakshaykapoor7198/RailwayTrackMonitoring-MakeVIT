@@ -18,6 +18,9 @@ var crack  = mongoose.Schema({
     },
     status:{
         type:Number
+    },
+    filename:{
+        type:String
     }
 });
 
