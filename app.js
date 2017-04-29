@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var mongodb = require('mongodb');
 var index = require('./routes/index');
 
-mongoose.connect('mongodb://localhost:27017/rails');
+mongoose.connect('mongodb://admin:admin@ds125481.mlab.com:25481/rails');
 
 var app = express();
 

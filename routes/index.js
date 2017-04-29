@@ -41,7 +41,7 @@ router.post('/post',function(req,res){
 
 router.get('/getrecent',(req,res)=>{
   l.Latest.find({},function(e,d){
-    if(!e){
+    if(!e && d[0]!=undefined){
       
       j.Junction.find({},(e1,d1)=>{
         var lat = d[0].clat;
