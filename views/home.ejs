@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<title></title>
+ 	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/javascripts/bootstrap.min.css">
+	<link rel="stylesheet" href="/javascripts/animate.css">
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/javascripts/flot/jquery.flot.js"></script>
+	<script src="/javascripts/flot/jquery.flot.labels.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+	<script src="/javascripts/jsDraw2D.js"></script>
+<style>
+
+	.myCSSClass
+    {
+        font-size: 20px;
+        color: green;
+        padding: 2px;
+        opacity: 0.80;
+		margin-top:15px;
+    }
+
+	#placeholder:after {
+		content: 'Latitude';
+		position: absolute;
+		top: 50%;
+		left: -50px;
+		font-weight: 600;
+		/* Safari */
+		-webkit-transform: rotate(-90deg);
+		/* Firefox */
+		-moz-transform: rotate(-90deg);
+		/* IE */
+		-ms-transform: rotate(-90deg);
+		/* Opera */
+		-o-transform: rotate(-90deg);
+		/* Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}
+
+
+	#placeholder:before {
+		content: 'Longitude';
+		position: absolute;
+		bottom: -30px;
+		left: 50%;
+		font-weight: 600;
+	}
+
+</style>
+
+</head>
+<body>
+
+	<center>
+	<div id="placeholder" style="width:1700px;height:980px"></div>
+	</center>
+
+<script src='/javascripts/wow.js'></script>
+<script type='text/javascript'>
+new WOW().init();
+</script>
+<script>
+	
+
+	  var i   = setInterval(function(){
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function(){
+			  if(this.readyState==4 && this.status==200){
+				  response  = JSON.parse(this.response);
+
+				var data = [ { color:'green',label: "Train", data: [ [response.tlat,response.tlong] ],points:{radius:15,show: true }, showLabels: true, labels: ["Train"], labelPlacement: "below", canvasRender: true, cColor: "green",cFont: "15px, san-serif"},
+				  { label: "Crack",color:'red', data:  [[response.clat,response.clong] ],points:{radius:15,show: true }, showLabels: true, labels: ["Crack"], labelPlacement: "below", canvasRender: true, cColor: "red",cFont: "15px, san-serif"}
+	  				]
+
+				response.junctions.forEach(function(junc){
+					var obj = new Object;
+					obj['label']="Junction";
+					obj['color']="blue",
+					obj['points']={"show":false};
+					obj['data']=[
+						[junc.slat,junc.slong],
+						[junc.s1lat,junc.s1long],
+						[junc.s2lat,junc.s2long],
+						[junc.s3lat,junc.s3long]
+					];
+					data.push(obj);
+				});
+
+
+				response.green.forEach(function(junc){
+					var obj = new Object;
+					obj['label']="Junction";
+					obj['color']="green",
+					obj['points']={"show":false};
+					obj['data']=[
+						[junc.slat,junc.slong],
+						[junc.s1lat,junc.s1long],
+						[junc.s2lat,junc.s2long],
+						[junc.s3lat,junc.s3long]
+					];
+					data.push(obj);
+				});
+				  
+
+
+				var options = {
+				lines: { show: true, lineWidth:13 },
+				points: { show: true ,radius: 5,fill:false},
+				xaxis: { show: true,autoscaleMargin: 0.04 },
+				yaxis: { show: true ,autoscaleMargin: 0.02 },
+				grid: { show:true,margin:10}  
+				};
+
+
+				$(document).ready(function(){
+					$.plot($("#placeholder"), data,options);		  
+				});
+
+	  
+			  }
+		  }
+		  xhttp.open('GET','/getrecent',true);
+		  xhttp.send();
+			
+	  },2000);
+
+	  
+  </script>
+</body>
+</html>
