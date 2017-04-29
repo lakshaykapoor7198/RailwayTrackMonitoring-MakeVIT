@@ -49,7 +49,9 @@ router.get('/getrecent',(req,res)=>{
         var arr = new Array();
         d1.forEach((junc)=>{
           if(junc.slat<lat && junc.s3lat>lat && junc.slong==long && junc.s3long==long){
-            // l.Latest.findAndUpdate({clat:lat},{})
+            l.Latest.findOneAndUpdate({clat:lat},{$set:{clat:d[0].clat,clong:d[0].clong,tlat:d[0].tlat,tlong:d[0].tlong,flag:1}},(e,d)=>{
+              console.log("Junction found");
+            });
             arr.push(junc);
             d1.splice(d1.indexOf(junc),1);
             console.log(junc);
@@ -60,11 +62,23 @@ router.get('/getrecent',(req,res)=>{
           tlong:d[0].tlong,
           clat:d[0].clat,
           clong:d[0].clong,
+          flag:d[0].flag,
           junctions: d1,
           green: arr
         }
         res.send(obj);
       });
+    }
+    else{
+      console.log(e);
+    }
+  });
+});
+
+router.get('/dead',(req,res)=>{
+  l.Latest.find({},(e,d)=>{
+    if(!e){
+      res.json({"flag":d[0]["flag"]});
     }
     else{
       console.log(e);
